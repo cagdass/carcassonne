@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 
 import Tile from './Tile';
 
-import ImageSource from  "../assets/images/tiles/Kanelbulle.png";
+import ImageSource from  "../assets/images/tiles/Godis.png";
 
 /*
   It looks like
-  ccccc
-  csccc
-  ccccc
-  ccccc
-  ccccc
+  ggggg
+  ggggg
+  rrrgg
+  ggrgg
+  ggrgg
 */
 
-class KanelbulleTile extends Component {
+class GodisTile extends Component {
 	render () {
 		let { x, y } = this.props;
 		
@@ -24,4 +24,4 @@ class KanelbulleTile extends Component {
 	}
 }
 
-export default KanelbulleTile;
+export default GodisTile;

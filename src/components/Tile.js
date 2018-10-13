@@ -5,7 +5,11 @@ class Tile extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {
+			dragging: false,
 			image: null,
+			rotation: 0,
+			x: props.x,
+			y: props.y,
 		};
 	}
 	
@@ -26,21 +30,33 @@ class Tile extends Component {
 		console.log(JSON.stringify(x,y));
 	}
 
-	handleDragEnd (e) {
-		console.log(JSON.stringify(e));
+	handleDragEnd (event) {
+		let { x, y } = event.target.attrs;
+		
+		this.setState({
+			dragging: false,
+			x: x,
+			y: y,
+		});
 	}
 
-	handleDragStart (e) {
-		console.log(JSON.stringify(e));
+	handleDragStart (event) {		
+		this.setState({
+			dragging: true,
+		});
+	}
+
+	setPosition (x, y) {
+		this.setState({ x, y });
 	}
 	
 	render() {
-		let { x, y } = this.props;
+		let { image, x, y } = this.state;
 		
 		return (
 			<Image x={x} y={y}				   
 				   draggable
-				   image={this.state.image}
+				   image={image}
 				   onDrag={this.handleDrag.bind(this)}
 				   onDragEnd={this.handleDragEnd.bind(this)}
 				   onDragStart={this.handleDragStart.bind(this)} />

@@ -61,5 +61,6 @@ typings/
 .next
 
 # ignore emacs buffers
-src/*~
-src/*#*#
+*~
+*#*#
+*.#*
