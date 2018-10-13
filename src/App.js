@@ -14,6 +14,10 @@ const container_style = {
 };
 
 class App extends Component {
+	handleCanvasClick = (event) => {
+		console.log(JSON.stringify(event));
+	}
+	
 	render() {
 		return (
 			<div style={container_style}>
@@ -23,6 +27,7 @@ class App extends Component {
 			  </div>
 			  <Stage draggable
 					 height={window.innerHeight}
+					 onClick={this.handleCanvasClick}
 					 width={window.innerWidth}>			   
 				<Layer draggable>
 				  <KanelbulleTile x={10} y={10} />

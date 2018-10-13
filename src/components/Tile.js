@@ -6,8 +6,10 @@ class Tile extends Component {
 		super(props);
 		this.state = {
 			dragging: false,
+			height: 100,
 			image: null,
 			rotation: 0,
+			width: 100,
 			x: props.x,
 			y: props.y,
 		};
@@ -26,11 +28,36 @@ class Tile extends Component {
 		};
 	}
 
-	handleDrag (x, y) {
-		console.log(JSON.stringify(x,y));
-	}
+	handleClick = (evt) => {
+		let { height, rotation, width, x, y } = this.state;
 
-	handleDragEnd (event) {
+		switch(rotation) {
+		case 0:
+			x += width;
+			break;
+		case 1:
+			y += height;
+			break;
+		case 2:
+			x -= width;
+			break;
+		case 3:
+			y -= height;
+			break;
+		default:
+		}
+
+		this.setState({
+			rotation: (rotation + 1) % 4,
+			x, y,
+		});
+	};
+
+	handleDrag = (x, y) => {
+		console.log(JSON.stringify(x,y));
+	};
+
+	handleDragEnd = (event) => {
 		let { x, y } = event.target.attrs;
 		
 		this.setState({
@@ -38,28 +65,33 @@ class Tile extends Component {
 			x: x,
 			y: y,
 		});
-	}
+	};
 
-	handleDragStart (event) {		
+	handleDragStart = (event) => {		
 		this.setState({
 			dragging: true,
 		});
-	}
+	};
 
-	setPosition (x, y) {
+	setPosition = (x, y) => {
 		this.setState({ x, y });
 	}
 	
 	render() {
-		let { image, x, y } = this.state;
+		let { classes } = this.props;
+		let { height, image, rotation, width, x, y } = this.state;
 		
 		return (
-			<Image x={x} y={y}				   
-				   draggable
+			<Image draggable
+				   height={height}
 				   image={image}
-				   onDrag={this.handleDrag.bind(this)}
-				   onDragEnd={this.handleDragEnd.bind(this)}
-				   onDragStart={this.handleDragStart.bind(this)} />
+				   onClick={this.handleClick}
+				   onDrag={this.handleDrag}
+				   onDragEnd={this.handleDragEnd}
+				   onDragStart={this.handleDragStart}
+				   rotation={rotation * 90}
+				   width={width}
+				   x={x} y={y} />
 		);
 	}
 }
