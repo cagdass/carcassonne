@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import { Image } from 'react-konva';
 
+import ImageSource from  "../assets/images/tiles/Havre.png";
+
 class Tile extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {
 			dragging: false,
-			height: 100,
+			height: 50,
 			image: null,
 			rotation: 0,
-			width: 100,
+			width: 50,
 			x: props.x,
 			y: props.y,
 		};
 	}
 	
-	componentDidMount() {
-		let { imageSource } = this.props;
+	componentDidMount () {
+		let imageSource = ImageSource;
 		const image = new window.Image();
 		image.src = imageSource;
 		image.onload = () => {
@@ -26,6 +28,20 @@ class Tile extends Component {
 				image: image
 			});
 		};
+	}
+
+	componentWillUnmount () {
+		window.removeEventListener('mousemove', this.handleMouseMove);
+		window.removeEventListener('mouseup', this.handleMouseUp);
+	}
+
+	componentWillReceiveProps = (newProps) => {
+		let { x, y } = this.state;
+		
+		this.setState({
+			x: newProps.x || x,
+			y: newProps.y || y,
+		});
 	}
 
 	handleClick = (evt) => {
@@ -53,10 +69,6 @@ class Tile extends Component {
 		});
 	};
 
-	handleDrag = (x, y) => {
-		console.log(JSON.stringify(x,y));
-	};
-
 	handleDragEnd = (event) => {
 		let { x, y } = event.target.attrs;
 		
@@ -73,6 +85,24 @@ class Tile extends Component {
 		});
 	};
 
+	handleEvent = (event) => {
+		window.addEventListener('mousemove', this.handleMouseMove);
+		window.addEventListener('mouseup', this.handleMouseUp);		
+	}
+	
+	handleMouseMove = ({clientX, clientY}) => {
+		
+	}
+
+	handleMouseUp = (event) => {
+		let { rotation,
+			  x, y } = this.state;
+		this.props.updateTilePosition(x, y, rotation);
+
+		window.removeEventListener('mousemove', this.handleMouseMove);
+		window.removeEventListener('mouseup', this.handleMouseUp);
+	}
+
 	setPosition = (x, y) => {
 		this.setState({ x, y });
 	}
@@ -82,13 +112,13 @@ class Tile extends Component {
 		let { height, image, rotation, width, x, y } = this.state;
 		
 		return (
-			<Image draggable
+			<Image draggable				   
 				   height={height}
 				   image={image}
 				   onClick={this.handleClick}
-				   onDrag={this.handleDrag}
 				   onDragEnd={this.handleDragEnd}
 				   onDragStart={this.handleDragStart}
+				   onMouseDown={this.handleEvent}
 				   rotation={rotation * 90}
 				   width={width}
 				   x={x} y={y} />

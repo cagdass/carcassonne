@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-
 import Tile from './Tile';
+
+import config from '../config.js';
 
 import ImageSource from  "../assets/images/tiles/Havre.png";
 
@@ -19,6 +20,10 @@ class HavreTile extends Component {
 		
 		return (
 			<Tile x={x} y={y}
+				  north={config.TILE.CITY}
+				  east={config.TILE.GRASS}
+				  south={config.TILE.ROAD}
+				  west={config.TILE.ROAD}
 				  imageSource={ImageSource} />
 		);
 	}

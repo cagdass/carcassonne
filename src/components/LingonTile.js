@@ -6,11 +6,11 @@ import ImageSource from  "../assets/images/tiles/Lingon.png";
 
 /*
   It looks like
-  ccccc
-  ccccc
-  ccccc
-  ccccc
-  cgggc
+  ggggg
+  ggggg
+  ggmgg
+  ggrgg
+  ggrgg
 */
 
 class LingonTile extends Component {
